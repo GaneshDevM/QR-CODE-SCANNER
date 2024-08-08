@@ -96,21 +96,6 @@ This will generate an optimized production build in the `build` directory. You c
 
    The decoded information from the QR code will be displayed on the screen.
 
-## Project Structure
-
-```
-qr-code-scanner/
-├── public/           # Public assets
-├── src/              # Source code
-│   ├── components/   # React components
-│   ├── App.js        # Main application component
-│   ├── index.js      # Entry point
-│   └── ...
-├── package.json      # Project configuration
-├── README.md         # Project documentation
-└── ...
-```
-
 ## Libraries and Tools Used
 
 - [React](https://reactjs.org/)
