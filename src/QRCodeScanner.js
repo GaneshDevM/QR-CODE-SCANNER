@@ -1,4 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
 import jsQR from 'jsqr';
 import ScanningSucceed from './ScanningSucceed'; 
 import './QRCodeScanner.css'
@@ -7,6 +9,17 @@ function QRCodeScanner() {
   const canvasRef = useRef(null);
   const [scannedData, setScannedData] = useState(null);
   const [scanning, setScanning] = useState(false);
+  
+  const [copied, setCopied] = useState(false); // State to track if text is copied
+
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(scannedData).then(() => {
+      setCopied(true); // Set copied state to true
+      setTimeout(() => setCopied(false), 2000); // Reset the icon after 2 seconds
+    }).catch((err) => {
+      console.error('Failed to copy: ', err);
+    });
+  };
 
   const mediaStreamRef = useRef(null);
 
@@ -87,7 +100,12 @@ function QRCodeScanner() {
       ) : (
         <div>
          {scanning===false ? (<ScanningSucceed/>):(<video ref={videoRef} autoPlay playsInline muted />)} 
-          <p>Scanned QR Code Data: {scannedData}</p>
+          <p>Scanned QR Code Data: {scannedData} <span></span>
+          <button onClick={handleCopyClick} disabled={!scannedData}>
+        <FontAwesomeIcon icon={copied ? faCheck : faCopy} /> {copied ? 'Copied!' : 'Copy'}
+      </button>
+          </p>
+            
           <button onClick={handleScanClick}>Scan Again</button>
         </div>
       )}
